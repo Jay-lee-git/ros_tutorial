@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
     rclcpp::Service<example_interfaces::srv::AddTwoInts>::SharedPtr service = 
         node->create_service<example_interfaces::srv::AddTwoInts>("add_two_ints", &add);
 
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Ready to add tow ints.");
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Ready to add two ints.");
 
     rclcpp::spin(node);
     rclcpp::shutdown();
