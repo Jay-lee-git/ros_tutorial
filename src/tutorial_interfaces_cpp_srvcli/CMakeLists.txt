@@ -1,24 +1,27 @@
 cmake_minimum_required(VERSION 3.8)
-project(tutorial_interfaces)
+project(tutorial_interfaces_cpp_srvcli)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
+find_package(tutorial_interfaces REQUIRED)
 
 
-# ros interface definition language
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/Num.msg"
-  "msg/Sphere.msg"
-  "srv/AddThreeInts.srv"
-  DEPENDENCIES geometry_msgs
-)
+add_executable(server src/add_three_ints_server.cpp)
+ament_target_dependencies(server rclcpp tutorial_interfaces)
 
+add_executable(client src/add_three_ints_client.cpp)
+ament_target_dependencies(client rclcpp tutorial_interfaces)
+
+
+install(TARGETS
+  server
+  client
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
