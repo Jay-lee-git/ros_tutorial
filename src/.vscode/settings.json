@@ -74,6 +74,11 @@
         "future": "cpp",
         "shared_mutex": "cpp",
         "cfenv": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "coroutine": "cpp",
+        "source_location": "cpp",
+        "valarray": "cpp"
+    },
+    "cmake.configureOnOpen": true,
+    "cmake.sourceDirectory": "/home/j/krm_ws/src/cpp_pubsub"
 }
