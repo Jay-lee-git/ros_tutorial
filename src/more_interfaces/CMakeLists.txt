@@ -43,7 +43,7 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-
+# rosidl_default_runtime 패키지에 의존한다고 명시적으로 나타냄
 ament_export_dependencies(rosidl_default_runtime)
 
 
