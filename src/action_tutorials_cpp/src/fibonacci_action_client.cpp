@@ -35,7 +35,7 @@ public:
 
         this->timer_->cancel();
 
-        if(!this->client_ptr_->wait_for_action_server()) {
+        if (!this->client_ptr_->wait_for_action_server()) {
             RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
             rclcpp::shutdown();
         }
@@ -59,8 +59,9 @@ private:
     rclcpp_action::Client<Fibonacci>::SharedPtr client_ptr_;
     rclcpp::TimerBase::SharedPtr timer_;
 
-    void goal_response_callback(const GoalHandleFibonacci::SharedPtr & goal_handle){
-        if (!goal_handle){
+    void goal_response_callback(const GoalHandleFibonacci::SharedPtr & goal_handle)
+    {
+        if (!goal_handle) {
             RCLCPP_ERROR(this->get_logger(), "Goal was rejected by server");
         } else {
             RCLCPP_INFO(this->get_logger(), "Goal accepted by server, waiting for result");
@@ -81,7 +82,7 @@ private:
 
     void result_callback(const GoalHandleFibonacci::WrappedResult & result)
     {
-        switch (result.code){
+        switch (result.code) {
             case rclcpp_action::ResultCode::SUCCEEDED:
                 break;
             case rclcpp_action::ResultCode::ABORTED:
