@@ -1,0 +1,5 @@
+# request;
+std_msgs/Int16MultiArray values
+---
+#response
+int64 sum
