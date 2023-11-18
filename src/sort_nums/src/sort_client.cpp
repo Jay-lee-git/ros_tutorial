@@ -23,11 +23,6 @@ void sort_numbers(std::vector<int> numbers) {
   std_msgs::msg::Int32MultiArray array_msg;
   array_msg.data = numbers;
   request->numbers_to_sort = array_msg;
-  std::cout << "checking before sorting: ";
-  for (auto number : numbers){
-    std::cout << number << " ";
-  }
-  std::cout << std::endl;
 
   auto result = client->async_send_request(request);
 
@@ -44,12 +39,28 @@ void sort_numbers(std::vector<int> numbers) {
   }
 }
 
+std::vector<int> store_vector(){
+  std::vector<int> vec;
+  int input;
+  std::cout << "Enter the elements: ";
+  while (std::cin >> input) {
+    vec.push_back(input);
+  }
+
+  std::cin.clear();
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  std::cout << "Entered: ";
+  for (int elem : vec){
+    std::cout << elem << " ";
+  }
+  return vec;
+}
+
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
   g_node = rclcpp::Node::make_shared("sort_client");
-
-  std::vector<int> numbers = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
-  sort_numbers(numbers);
+  sort_numbers(store_vector());
 
   rclcpp::shutdown();
   return 0;
