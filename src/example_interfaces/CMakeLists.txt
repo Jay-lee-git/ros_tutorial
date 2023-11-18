@@ -8,6 +8,9 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+
+ament_export_dependencies(std_msgs)
+
 rosidl_generate_interfaces(${PROJECT_NAME}
 "srv/AddTwoInts.srv"
 "srv/SortVector.srv"
