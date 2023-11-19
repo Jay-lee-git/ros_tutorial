@@ -20,20 +20,13 @@
         "command": "-notebook.cell.copyDown",
         "when": "notebookEditorFocused && !inputFocus"
     },
-    { 
-        "key" : "ctrl+a", 
+    {
+        "key" : "ctrl+a",
         "command" : "editor.action.selectAll",
         "when" : "editorTextFocus && !inDebugRepl" },
-    { 
-        "key" : "ctrl+c", 
-        "command" : "editor.action.clipboardCopyAction",
-        "when" : "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'" },
-    { 
-        "key" : "ctrl+v", 
-        "command" : "editor.action.clipboardPasteAction",
-        "when" : "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Insert'" },
-    { 
-        "key" : "ctrl+x", 
+
+    {
+        "key" : "ctrl+x",
         "command" : "editor.action.clipboardCutAction",
         "when" : "editorTextFocus && !inDebugRepl" },
     {
@@ -72,5 +65,5 @@
         "key": "ctrl+8",
         "command": "workbench.action.openEditorAtIndex8"
     }
- 
+
 ]
