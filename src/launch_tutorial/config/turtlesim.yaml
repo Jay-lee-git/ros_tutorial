@@ -1,0 +1,6 @@
+# /turtlesim2/sim:
+/**:
+  ros_parameters:
+  brackground_b: 255
+  brackground_g: 86
+  brackground_r: 150
