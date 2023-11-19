@@ -1,11 +1,12 @@
 alias sr="source ~/.bashrc; echo \"bashrc is reloaded\""
 alias vr="vim ~/.bashrc"
 
-alias cbs="colcon build --packages-select"
 alias cbs='colcon build --symlink-install'
 alias cbu='colcon build --symlink-install --packages-up-to'
 
-alias cb='cd ~/tuto_ws && colcon build --symlink-install'
 alias cs='cd ~/tuto_ws/src'
 alias cw='cd ~/tuto_ws'
-alias cbp='colcon build --symlink-install --packages-select'
+
+alias cb='cw && colcon build --symlink-install'
+alias cbs="cw && colcon build --packages-select"
+alias cbp='cw && colcon build --symlink-install --packages-select'
