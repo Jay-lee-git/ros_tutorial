@@ -55,19 +55,29 @@ class FrameListener : public rclcpp::Node
           geometry_msgs::msg::TransformStamped t;
           
           try {
+            // 5sec duration 추가
             rclcpp::Time now = this->get_clock()->now();
+            rclcpp::Time when = this->get_clock()->now() - rclcpp::Duration(5,0);
             t = tf_buffer_->lookupTransform(
-              toFrameRel, fromFrameRel,
               /*
-              tf2::TimePointZero에서 now 로 변경했을때의 고려할점
-              - TimePointZero의 경우 last available 한 시간을 자동으로 가져온다
+              아래와 같이 실행할 시, 두 프레임 모두 5초 전으로 position을 기준으로 한다,
+              하지만 실행시에 5초 전은 존재하지 않으므로 이상하게 움직이는 문제가 발생한다
+              toFrameRel, 
+              fromFrameRel, 
+              when, 
+              ---------------------------
+              now를 추가할시 아래와 같이 정상적으로 작동한다
 
-                하지만, now와 같이 명시적으로 선언시 아래와 같은 이유로 작동되지 않는다
-                  1. 다른 tf를 듣기 위해 대기함
-                  2. tf 를 보낼때도 buffer를 통해서 나가는데 이때 약간의 딜레이가 발생함
-                    - 따라서 lookupTransform의 4번째 변수인 optional timeout을 추가함으로써 이 문제를 해결한다
+               Past Transformation    Time Travel    Current Transformation
+              [Carrot1] ---------> [World Frame] ---------> [Turtle2]
+                (Past)               (Past to Now)           (Now)
+
               */
-              now,
+              toFrameRel, // target frame
+              now, // time to transform to
+              fromFrameRel, // source frame
+              when, //source frame이 evaluate 되는 시각
+              "world", // 변경이 안될 frame
               50ms
               );
           } catch (const tf2::TransformException & ex){
