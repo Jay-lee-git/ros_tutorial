@@ -7,7 +7,6 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-// ?
 #include "tf2/exceptions.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_ros/buffer.h"
@@ -56,9 +55,21 @@ class FrameListener : public rclcpp::Node
           geometry_msgs::msg::TransformStamped t;
           
           try {
+            rclcpp::Time now = this->get_clock()->now();
             t = tf_buffer_->lookupTransform(
               toFrameRel, fromFrameRel,
-              tf2::TimePointZero);
+              /*
+              tf2::TimePointZero에서 now 로 변경했을때의 고려할점
+              - TimePointZero의 경우 last available 한 시간을 자동으로 가져온다
+
+                하지만, now와 같이 명시적으로 선언시 아래와 같은 이유로 작동되지 않는다
+                  1. 다른 tf를 듣기 위해 대기함
+                  2. tf 를 보낼때도 buffer를 통해서 나가는데 이때 약간의 딜레이가 발생함
+                    - 따라서 lookupTransform의 4번째 변수인 optional timeout을 추가함으로써 이 문제를 해결한다
+              */
+              now,
+              50ms
+              );
           } catch (const tf2::TransformException & ex){
             RCLCPP_INFO(
               this->get_logger(), "Could not transform %s to %s: %s",
